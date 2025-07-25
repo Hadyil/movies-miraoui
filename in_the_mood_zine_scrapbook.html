@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>In the Mood for Love - A Cinematic Scrapbook</title>
+    <link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Courier+Prime:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Crimson Text', serif;
+            background: #f0ece1; /* Paper texture background */
+            color: #333;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .scrapbook-container {
+            position: relative;
+            width: 100%;
+            max-width: 1000px; /* Limit overall width for scrapbook feel */
+            margin: 20px auto;
+            padding: 30px;
+            background: url('./Paperbackgroundtexture.jpg') repeat; /* Main paper texture */
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+        }
+
+        .page {
+            min-height: 80vh; /* Adjust height for scrapbook pages */
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            margin-bottom: 50px;
+            background-size: cover;
+            background-position: center;
+            border: 2px solid rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+            transform: rotate(var(--rotation, 0deg)); /* Dynamic rotation for pages */
+            transition: transform 0.3s ease;
+        }
+
+        .page:nth-child(odd) { --rotation: -1deg; }
+        .page:nth-child(even) { --rotation: 1deg; }
+
+        .page::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.1); /* Lighter overlay for scrapbook feel */
+            z-index: 1;
+        }
+
+        .page-content {
+            position: relative;
+            z-index: 2;
+            max-width: 700px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.7); /* Content background */
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Page 1 - Title Page */
+        .page-1 {
+            background-image: url("./InTheMoodForLove_heart.jpg"); /* New title image */
+            text-align: center;
+            color: #f4f1e8;
+        }
+
+        .main-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 4.5rem;
+            font-weight: 700;
+            color: #8B0000; /* Deep red */
+            text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.9);
+            margin-bottom: 20px;
+            letter-spacing: 3px;
+            transform: rotate(-2deg);
+        }
+
+        .subtitle {
+            font-family: 'Shadows Into Light', cursive;
+            font-size: 2.2rem;
+            font-style: italic;
+            color: #B8860B; /* Warm sepia */
+            margin-bottom: 40px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+        }
+
+        .film-info {
+            font-family: 'Courier Prime', monospace;
+            font-size: 1.2rem;
+            color: #333;
+            line-height: 1.6;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-left: 5px solid #DC143C;
+            margin: 20px auto;
+            max-width: 500px;
+            transform: rotate(1deg);
+        }
+
+        .quote {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 1.6rem;
+            color: #8B0000;
+            text-align: center;
+            margin: 30px auto;
+            padding: 25px;
+            border: 3px dashed #DC143C;
+            background: rgba(255, 255, 255, 0.85);
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+            transform: rotate(2deg);
+        }
+
+        /* Page 2 - Plot */
+        .page-2 {
+            background-image: url("./film_still_1.jpg");
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            color: #8B0000;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            border-bottom: 3px double #B8860B;
+            padding-bottom: 10px;
+            transform: rotate(-1deg);
+        }
+
+        .content-text {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            color: #333;
+            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.9);
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+            box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .polaroid {
+            background: #f0ece1;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+            text-align: center;
+            margin: 30px auto;
+            max-width: 300px;
+            transform: rotate(var(--polaroid-rotation, 3deg));
+            position: relative;
+        }
+
+        .polaroid:nth-of-type(1) { --polaroid-rotation: 3deg; }
+        .polaroid:nth-of-type(2) { --polaroid-rotation: -5deg; }
+        .polaroid:nth-of-type(3) { --polaroid-rotation: 1deg; }
+
+        .polaroid img {
+            width: 100%;
+            border-radius: 4px;
+            filter: grayscale(10%) sepia(20%); /* Vintage photo effect */
+        }
+
+        .polaroid-caption {
+            font-family: 'Shadows Into Light', cursive;
+            font-size: 1rem;
+            color: #333;
+            margin-top: 10px;
+        }
+
+        .tape {
+            position: absolute;
+            width: 80px;
+            height: 20px;
+            background-size: cover;
+            opacity: 0.8;
+            z-index: 10;
+        }
+
+        .tape-top-left { top: -10px; left: 20px; transform: rotate(-5deg); background-image: url('./tape1.jpg'); }
+        .tape-top-right { top: -10px; right: 20px; transform: rotate(8deg); background-image: url('./tape2.jpg'); }
+        .tape-bottom-left { bottom: -10px; left: 20px; transform: rotate(3deg); background-image: url('./tape1.jpg'); }
+        .tape-bottom-right { bottom: -10px; right: 20px; transform: rotate(-10deg); background-image: url('./tape2.jpg'); }
+
+        .washi-tape {
+            position: absolute;
+            width: 120px;
+            height: 30px;
+            background: url('./washi_tape.jpg') no-repeat center center / cover;
+            opacity: 0.7;
+            z-index: 10;
+        }
+
+        .washi-tape-1 { top: 15%; left: -30px; transform: rotate(15deg); }
+        .washi-tape-2 { bottom: 10%; right: -40px; transform: rotate(-20deg); }
+
+        .coffee-stain {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: url('./coffee_stain.jpg') no-repeat center center / contain;
+            opacity: 0.4;
+            z-index: 0;
+        }
+
+        .stain-1 { top: 5%; left: 10%; transform: rotate(20deg); }
+        .stain-2 { bottom: 15%; right: 5%; transform: rotate(-30deg); }
+
+        /* Page 3 - Themes */
+        .page-3 {
+            background-image: url("./film_still_2.jpg");
+        }
+
+        .theme-section {
+            background: rgba(255, 255, 255, 0.85);
+            padding: 25px;
+            margin: 20px 0;
+            border-left: 5px solid #2F4F4F; /* Muted teal */
+            border-radius: 5px;
+            box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .theme-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: #2F4F4F;
+            margin-bottom: 15px;
+        }
+
+        /* Page 4 - Characters */
+        .page-4 {
+            background-image: url("./film_still_3.jpg");
+        }
+
+        .character-section {
+            background: rgba(255, 255, 255, 0.85);
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+            border: 2px solid #B8860B;
+            box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .character-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: #8B0000;
+            margin-bottom: 10px;
+        }
+
+        /* Page 5 - Conclusion */
+        .page-5 {
+            background-image: url("./film_still_4.jpg");
+        }
+
+        .whisper-text {
+            font-family: 'Courier Prime', monospace;
+            font-size: 1rem;
+            color: #B8860B;
+            font-style: italic;
+            opacity: 0.9;
+            margin: 10px 0;
+            transform: rotate(var(--whisper-rotation, 0deg));
+        }
+
+        .whisper-text:nth-of-type(1) { --whisper-rotation: 2deg; }
+        .whisper-text:nth-of-type(2) { --whisper-rotation: -1deg; }
+
+        .accent-mark {
+            color: #DC143C;
+            font-size: 1.3rem;
+            margin: 0 5px;
+        }
+
+        .stamp {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: url('./stamp_singapore.jpg') no-repeat center center / contain;
+            opacity: 0.9;
+            z-index: 10;
+            transform: rotate(10deg);
+            top: 20px;
+            right: 20px;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 3rem;
+            }
+            
+            .section-title {
+                font-size: 2.5rem;
+            }
+            
+            .content-text {
+                font-size: 1.1rem;
+            }
+            
+            .page {
+                padding: 20px;
+            }
+            .scrapbook-container {
+                margin: 10px auto;
+                padding: 15px;
+            }
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Navigation dots - can be removed for full scrapbook feel */
+        .nav-dots {
+            display: none; /* Hide navigation dots for scrapbook aesthetic */
+        }
+    </style>
+</head>
+<body>
+    <div class="scrapbook-container">
+        <div class="coffee-stain stain-1"></div>
+        <div class="coffee-stain stain-2"></div>
+
+        <!-- Page 1: Title -->
+        <div class="page page-1" id="page1">
+            <div class="tape tape-top-left"></div>
+            <div class="tape tape-bottom-right"></div>
+            <div class="washi-tape washi-tape-1"></div>
+            <div class="stamp"></div>
+            <div class="page-content">
+                <h1 class="main-title">In the Mood for Love</h1>
+                <p class="subtitle">A Love So Quiet It Echoes</p>
+                
+                <div class="film-info">
+                    <p><strong>Director:</strong> Wong Kar-wai</p>
+                    <p><strong>Year:</strong> 2000</p>
+                    <p><strong>Genre:</strong> Romantic Drama, Sad Silences, Cheating but make it classy</p>
+                    <p><strong>Mood:</strong> Soggy noodles, stolen glances, heartbreak in slow motion</p>
+                </div>
+                
+                <div class="quote">
+                    "It's not a love story. It's a story about love. And curtains. Lots of curtains."
+                </div>
+                
+                <p class="whisper-text">(if you know, you know)</p>
+            </div>
+        </div>
+
+        <!-- Page 2: Plot -->
+        <div class="page page-2" id="page2">
+            <div class="tape tape-top-right"></div>
+            <div class="tape tape-bottom-left"></div>
+            <div class="page-content">
+                <h2 class="section-title">🥢 Plot in a Chopstick Grip</h2>
+                
+                <div class="content-text">
+                    <p>Hong Kong, 1962. Two neighbors, Mr. Chow, who's a journalist with great ties, and Mrs. Chan, a secretary with better cheongsams, suspect their spouses are having an affair. Instead of confronting the cheaters, they embark on a beautifully restrained, emotionally devastating non-affair of their own.</p>
+                    
+                    <p>They rehearse painful goodbyes that haven't happened yet. They write martial arts serials to pass the time. They eat a lot of noodles. And they fall in love but never really admit it.</p>
+                    
+                    <p><strong>It's not what they do. It's what they don't do that hurts the most.</strong></p>
+                </div>
+                
+                <div class="content-text">
+                    <p>Mrs. Chan and Mr. Chow spend a large part of the movie pretending, playing the roles of their cheating spouses to figure out how the affair started. But what begins as a script rehearsal slowly becomes their own story. The irony? They're roleplaying people who hurt them… while becoming people who hurt themselves.</p>
+                    
+                    <p class="whisper-text">This is emotional inception. And no, DiCaprio is nowhere in sight.</p>
+                </div>
+                <div class="polaroid">
+                    <img src="./noodle_scene.jpg" alt="Noodle Scene">
+                    <div class="polaroid-caption">Late-night noodles, early heartbreaks</div>
+                </div>
+                <div class="quote">
+                    "We won't be like them."
+                    <span class="accent-mark">💔</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page 3: Themes -->
+        <div class="page page-3" id="page3">
+            <div class="tape tape-top-left"></div>
+            <div class="washi-tape washi-tape-2"></div>
+            <div class="page-content">
+                <h2 class="section-title">📸 Half-Glances & Hallways</h2>
+                
+                <div class="quote">
+                    "He remembers those vanished years... As though looking through a dusty window pane, the past is something he could see, but not touch."
+                </div>
+                
+                <div class="theme-section">
+                    <h3 class="theme-title">⏳ THEME 1: The Tyranny of Time</h3>
+                    <p>This film isn't just set in 1962; it's trapped there. Wong Kar-wai plays with time like it's a sadistic character: stretching it, looping it, freezing it with slow-mo like we're all stuck in molasses.</p>
+                    
+                    <p class="whisper-text">Even the clocks on the walls tick at different speeds because emotional time doesn't care about physics.</p>
+                </div>
+                
+                <div class="polaroid" style="transform: rotate(5deg); margin-left: -50px;">
+                    <img src="./Film_InTheMoodForLove_.jpg" alt="Wong Kar-Wai Aesthetic">
+                    <div class="polaroid-caption">A frame from the master</div>
+                </div>
+
+                <div class="theme-section">
+                    <h3 class="theme-title">🚪 THEME 2: What's Behind the Door</h3>
+                    <p>Doors. Curtains. Hallways. Mirrors. Every scene is a peek through something. You're never fully inside this romance, just like the characters.</p>
+                    
+                    <p>Wong Kar-wai doesn't just film a story. He hides it behind red curtains, then dares you to feel it anyway.</p>
+                    
+                    <p class="whisper-text">the hallway knows everything</p>
+                </div>
+                
+                <div class="content-text">
+                    <p><strong>📷 CINEMATOGRAPHY = Painfully Beautiful</strong></p>
+                    <p>• Lighting: Neon blues, sickly yellows, the glow of 1960s Hong Kong<br>
+                    • Framing: Half the characters' faces are cut off<br>
+                    • Slow Motion: Ever wanted heartbreak at 0.75x speed?<br>
+                    • Montage of noodles: If you thought eating alone couldn't be tragic, think again</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page 4: Characters -->
+        <div class="page page-4" id="page4">
+            <div class="tape tape-top-right"></div>
+            <div class="washi-tape washi-tape-1" style="top: 5%; right: -20px; transform: rotate(-10deg);"></div>
+            <div class="page-content">
+                <h2 class="section-title">🖋️ Ghost Lovers and the Echo Chamber of Regret</h2>
+                
+                <div class="character-section">
+                    <h3 class="character-name">Mrs. Chan (Su Li-zhen)</h3>
+                    <p>She's grace in a cheongsam, but don't be fooled; beneath the elegance is a woman softly collapsing. She walks slowly, always composed, like she's trying not to spill grief all over the sidewalk. She wears her suffering like her dresses: tailored, stunning, too tight to breathe in.</p>
+                </div>
+                
+                <div class="polaroid" style="transform: rotate(-2deg); margin-right: -50px;">
+                    <img src="./emotional_still.jpg" alt="Emotional Still">
+                    <div class="polaroid-caption">A moment of quiet despair</div>
+                </div>
+
+                <div class="character-section">
+                    <h3 class="character-name">Mr. Chow</h3>
+                    <p>He writes martial arts serials for a living, but emotionally, he's all about the slow burn. He's the type who says everything with his eyes and then says something entirely different with his mouth. He's also the type to whisper his secrets into a temple wall and seal it with mud.</p>
+                    
+                    <p class="whisper-text">Healthy coping? Maybe not. Cinematic? Absolutely.</p>
+                </div>
+                
+                <div class="content-text">
+                    <h3 style="color: #B8860B; margin-bottom: 15px;">💬 Dialogue Breakdown:</h3>
+                    <div class="quote" style="text-align: left; margin: 15px 0;">
+                        "I didn't expect it to hurt this much."<br>
+                        <span style="font-size: 0.9rem; color: #333;">— Mr. Chow, possibly speaking to Mrs. Chan. Definitely speaking to us.</span>
+                    </div>
+                    
+                    <div class="quote" style="text-align: left; margin: 15px 0;">
+                        "We can't be like them."<br>
+                        <span style="font-size: 0.9rem; color: #333;">— Mrs. Chan, the realist line in a film full of beautiful lies.</span>
+                    </div>
+                    
+                    <p>The film's power is in its silences. What they don't say hurts more than any monologue.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page 5: Conclusion -->
+        <div class="page page-5" id="page5">
+            <div class="tape tape-bottom-right"></div>
+            <div class="washi-tape washi-tape-2" style="bottom: 15%; left: -30px; transform: rotate(25deg);"></div>
+            <div class="page-content">
+                <h2 class="section-title">🥀 Why the Ending Hurts (Even More on Rewatch)</h2>
+                
+                <div class="content-text">
+                    <p>At first, you think it's tragic. Then you rewatch and realize: it's tragic because they almost loved each other in the right way, but didn't.</p>
+                    
+                    <p>When Mr. Chow returns to the apartment later and Mrs. Chan is just… gone, that cigarette butt he finds is basically her ghost. And what's worse? She returns, too. Years later. Just a little too late. Always a little too late.</p>
+                    
+                    <p class="whisper-text">🕳 The final whisper at Angkor Wat isn't closure; it's a monument to everything unsaid, unlived, and unresolved.</p>
+                </div>
+                
+                <div class="polaroid" style="transform: rotate(7deg); margin-left: 50px;">
+                    <img src="./2000_InTheMoodForLove.jpg" alt="Angkor Wat">
+                    <div class="polaroid-caption">The secret kept in a tree</div>
+                </div>
+
+                <div class="content-text" style="background: rgba(255, 255, 255, 0.9); border: 2px solid #B8860B;">
+                    <h3 style="color: #8B0000; text-align: center; margin-bottom: 20px;">✨ TL;DR (Too Lush; Didn't Resist):</h3>
+                    <p style="text-align: center; font-size: 1.4rem; font-style: italic;">This movie is one long, stunning sigh. It's what longing looks like when it's dressed for dinner but goes home hungry.</p>
+                </div>
+                
+                <div class="quote">
+                    💔 "In the Mood for Love isn't just about falling in love. It's about the heartbreak of good timing with bad circumstances. About the love that could've been… if only. And that's why we watch it. To suffer. Beautifully."
+                </div>
+                
+                <p class="whisper-text" style="text-align: center; margin-top: 40px;">
+                    <span class="accent-mark">🌹</span> A love letter to longing—nostalgic, graceful, and aching <span class="accent-mark">🌹</span>
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
